@@ -1,0 +1,27 @@
+FROM ubuntu:20.04
+RUN apt-get update
+RUN apt -y upgrade
+
+RUN apt-get install -y mongodb
+RUN apt-get update && apt-get install -y gnupg2
+
+RUN apt install apt-transport-https ca-certificates curl software-properties-common
+RUn add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+RUN apt-cache policy docker-ce
+RUN apt install docker-ce
+
+RUN apt-get install -y wget
+RUN apt-get install -y software-properties-common
+RUN wget -qO- https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add -
+RUN tee /etc/apt/trusted.gpg.d/server-6.0.asc
+
+
+#RUN apt-get install -y mongodb-mongosh
+RUN apt install -y build-essential libssl-dev libffi-dev python3-dev
+RUN apt install -y python3-pip
+RUN pip install pymongo
+
+RUN mkdir -p mongo/db
+
+EXPOSE 27017
+CMD sleep 3600

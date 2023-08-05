@@ -1,0 +1,16 @@
+FROM ubuntu:18.04
+RUN apt-get update && apt-get install -y gnupg2
+RUN apt install apt-transport-http ca-certificates curl software-properties-common
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg
+RUN apt-get install -y wget
+RUN wget https://download.docker.com/linux/ubuntu/gpg
+RUN apt-key add gpg
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+RUN apt-cache policy docker-ce
+RUN apt install -y docker-ce
+RUN systemctl status docker
+
+#RUN mkdir -p mongo/db
+
+EXPOSE 27017
+CMD sleep 3600
